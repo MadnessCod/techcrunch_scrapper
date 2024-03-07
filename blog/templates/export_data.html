@@ -1,0 +1,12 @@
+<!-- templates/export_data.html -->
+
+<form method="post" action="{% url 'export_data' %}">
+    {% csrf_token %}
+    <label for="export_format">Choose export format:</label>
+    <select name="export_format">
+        <option value="csv">CSV</option>
+        <option value="xls">Excel (XLS)</option>
+        <option value="json">JSON</option>
+    </select>
+    <button type="submit">Export Data</button>
+</form>
