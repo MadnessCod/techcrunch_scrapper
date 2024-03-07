@@ -1,13 +1,11 @@
 import os
 import shutil
 import time
-
-import celery
 import wget
 from urllib.error import URLError
 from django.utils import timezone
 from import_export.formats import base_formats
-from TechCrunchScrapper.local_settings import UNTIL_PAGE, MAX_RETRIES, RETRY_DELAY
+from .site_settings import MAX_RETRIES, RETRY_DELAY
 from .models import Article, Author, KeyWord, KeyWordResult, KeyWordResultItem, ArticleTag, Category, Tag
 from .resources import ArticleResource
 from bs4 import BeautifulSoup
@@ -16,7 +14,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from celery import shared_task
 from celery import chain
-from celery import current_app
+
 
 options = webdriver.FirefoxOptions()
 options.add_argument('--headless')

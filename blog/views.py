@@ -1,22 +1,17 @@
 import os
-import shutil
-
 import celery
 from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import render, HttpResponse
-from import_export.formats import base_formats
-from .models import Article
-from .resources import ArticleResource
 from .forms import UserInputForm
 from .tasks import daily_scrapper, search_scrapper
-from celery import chain
 
 
 # Create your views here.
 
 
 def search(request):
+    """scrape results from the search menu"""
     if request.method == 'POST':
         form = UserInputForm(request.POST)
         if form.is_valid():
@@ -42,14 +37,6 @@ def search(request):
 
 
 def main_page_scraper(request):
+    """initiate daily scraping manually visit blog/views"""
     daily_scrapper.delay()
     return HttpResponse('tasks started')
-
-
-def checker():
-    while len(celery.current_app.tasks.values()) != 0:
-        print('success')
-        break
-
-
-checker()
